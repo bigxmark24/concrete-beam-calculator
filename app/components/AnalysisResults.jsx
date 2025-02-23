@@ -57,7 +57,7 @@ const Results = ({ results }) => {
               </p>
               <p>
                 ∴ SRB, use ρ<sub className='text-sm'>min</sub> ={' '}
-                {pmin.toFixed(4).toFixed(4)}
+                {pmin.toFixed(4)}
               </p>
             </>
           )}
@@ -128,7 +128,7 @@ const Results = ({ results }) => {
                 <sub className='text-sm'>s</sub> ≥ ε
                 <sub className='text-sm'>min</sub> = {esmin.toFixed(4)}
               </p>
-              <p>∴ Transition Zone, use Φ = {phi}</p>
+              <p>∴ Transition Zone, use Φ = {phi.toFixed(4)}</p>
             </>
           )}
           {strainStatus === STRAIN_STATUS.COMPRESSION_CONTROLLED && (

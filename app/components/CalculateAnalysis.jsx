@@ -38,6 +38,7 @@ const CalculateButton = ({ given, setResults }) => {
     const steelStatus = fs < fy ? STEEL_STATUS.SDNY : STEEL_STATUS.SY
     if (steelStatus === STEEL_STATUS.SDNY) {
       window.alert(STEEL_STATUS.SDNY)
+      setLoading(false)
       return
     }
 
@@ -62,6 +63,8 @@ const CalculateButton = ({ given, setResults }) => {
     const nominalMoment = As * fy * (d - a / 2)
     const ultimateMoment = phi * nominalMoment
 
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     setResults({
       pmin1,
       pmin2,
@@ -84,8 +87,6 @@ const CalculateButton = ({ given, setResults }) => {
       nominalMoment,
       ultimateMoment,
     })
-
-    await new Promise((resolve) => setTimeout(resolve, 1000))
     setLoading(false)
   }
 
