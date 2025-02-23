@@ -11,11 +11,9 @@ const AnalysisForm = ({ dimensions, handleInputChange }) => {
         <input
           id='b'
           name='b'
-          type='number'
           value={dimensions.b}
           onChange={handleInputChange}
           className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-          min='0'
         />
       </div>
 
@@ -29,29 +27,57 @@ const AnalysisForm = ({ dimensions, handleInputChange }) => {
         <input
           id='d'
           name='d'
-          type='number'
           value={dimensions.d}
           onChange={handleInputChange}
           className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-          min='0'
         />
       </div>
 
       <div>
         <label
-          htmlFor='As'
+          htmlFor='steel'
           className='block text-sm font-medium text-gray-700 mb-1'
         >
-          Area of steel (As) in quantity-mm dia. (4-28):
+          Steel in quantity-diameter(mm). (ex: 4-28):
         </label>
         <input
-          id='As'
-          name='As'
-          type='number'
-          value={dimensions.As}
+          id='steel'
+          name='steel'
+          value={dimensions.steel}
           onChange={handleInputChange}
           className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-          min='0'
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor='fc'
+          className='block text-sm font-medium text-gray-700 mb-1'
+        >
+          Concrete Compressive Strength (fc') in MPa:
+        </label>
+        <input
+          id='fc'
+          name='fc'
+          value={dimensions.fc}
+          onChange={handleInputChange}
+          className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor='fy'
+          className='block text-sm font-medium text-gray-700 mb-1'
+        >
+          Steel Yield Strength (fy) in MPa:
+        </label>
+        <input
+          id='fy'
+          name='fy'
+          value={dimensions.fy}
+          onChange={handleInputChange}
+          className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
         />
       </div>
     </div>

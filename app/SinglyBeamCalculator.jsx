@@ -1,21 +1,53 @@
 'use client'
 
 import { useState } from 'react'
-import { AnalysisForm, BeamDiagram, DesignForm } from './components'
+import {
+  AnalysisForm,
+  BeamDiagram,
+  CalculateAnalysis,
+  DesignForm,
+  AnalysisResults,
+} from './components'
 import Image from 'next/image'
 
 const SinglyBeamCalculator = () => {
   const [activeTab, setActiveTab] = useState('analysis')
-  const [dimensions, setDimensions] = useState({
+  const [analysis, setAnalysis] = useState({
     b: 300,
     d: 500,
-    As: 200,
-    moment: 0,
+    steel: '4-28',
+    fc: 27,
+    fy: 400,
   })
+  const [design, setDesign] = useState({
+    b: 500,
+    d: 500,
+    load: 0,
+  })
+  const [analysisResults, setAnalysisResults] = useState({})
 
-  const handleInputChange = (e) => {
+  const handleAnalysisChange = (e) => {
     const { name, value } = e.target
-    setDimensions((prev) => ({
+    if (name === 'steel') {
+      if (/^[0-9-]*$/.test(value)) {
+        setAnalysis((prev) => ({
+          ...prev,
+          [name]: value,
+        }))
+      }
+      return
+    }
+
+    if (/^[0-9]*$/.test(value)) {
+      setAnalysis((prev) => ({
+        ...prev,
+        [name]: parseFloat(value) || '',
+      }))
+    }
+  }
+  const handleDesignChange = (e) => {
+    const { name, value } = e.target
+    setDesign((prev) => ({
       ...prev,
       [name]: parseFloat(value) || 0,
     }))
@@ -59,19 +91,34 @@ const SinglyBeamCalculator = () => {
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          <BeamDiagram dimensions={dimensions} />
+          <div className='sticky top-0 md:static bg-white'>
+            <BeamDiagram
+              dimensions={activeTab === 'analysis' ? analysis : design}
+            />
+          </div>
 
-          {activeTab === 'analysis' ? (
-            <AnalysisForm
-              dimensions={dimensions}
-              handleInputChange={handleInputChange}
-            />
-          ) : (
-            <DesignForm
-              dimensions={dimensions}
-              handleInputChange={handleInputChange}
-            />
-          )}
+          <div className='md:max-h-[415px] lg:max-h-[495px] md:overflow-y-auto'>
+            {activeTab === 'analysis' ? (
+              <>
+                <AnalysisForm
+                  dimensions={analysis}
+                  handleInputChange={handleAnalysisChange}
+                />
+                <CalculateAnalysis
+                  given={analysis}
+                  setResults={setAnalysisResults}
+                />
+                {Object.keys(analysisResults).length > 0 && (
+                  <AnalysisResults results={analysisResults} />
+                )}
+              </>
+            ) : (
+              <DesignForm
+                dimensions={design}
+                handleInputChange={handleDesignChange}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

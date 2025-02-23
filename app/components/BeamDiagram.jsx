@@ -89,8 +89,12 @@ const BeamDiagram = ({ dimensions }) => {
           a = (?) mm
         </text>
 
+        <text x='200' y='40' textAnchor='middle'>
+          fc' = {dimensions.fc} MPa, fy = {dimensions.fy} MPa
+        </text>
+
         <text x='200' y='370' textAnchor='middle'>
-          As = {dimensions.As} mm dia.
+          Steel = {dimensions.steel} mm dia.
         </text>
         <circle
           cx='200'
