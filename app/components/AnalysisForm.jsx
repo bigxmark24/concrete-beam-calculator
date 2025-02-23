@@ -54,7 +54,8 @@ const AnalysisForm = ({ dimensions, handleInputChange }) => {
           htmlFor='fc'
           className='block text-sm font-medium text-gray-700 mb-1'
         >
-          Concrete Compressive Strength (fc') in MPa:
+          Concrete Compressive Strength (f<sub className='text-sm'>c</sub>') in
+          MPa:
         </label>
         <input
           id='fc'
@@ -70,7 +71,7 @@ const AnalysisForm = ({ dimensions, handleInputChange }) => {
           htmlFor='fy'
           className='block text-sm font-medium text-gray-700 mb-1'
         >
-          Steel Yield Strength (fy) in MPa:
+          Steel Yield Strength (f<sub className='text-sm'>y</sub>) in MPa:
         </label>
         <input
           id='fy'

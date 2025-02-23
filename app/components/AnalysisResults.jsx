@@ -99,10 +99,15 @@ const Results = ({ results }) => {
 
         <div>
           <p className='font-semibold'>Step #4: Stress Check</p>
-          <p>fs = {fs.toFixed(4)} MPa</p>
+          <p>
+            f<sub className='text-sm'>s</sub> = {fs.toFixed(4)} MPa
+          </p>
           {steelStatus === STEEL_STATUS.SY && (
             <>
-              <p>fs {'>'} fy</p>
+              <p>
+                f<sub className='text-sm'>s</sub> {'>'} f
+                <sub className='text-sm'>y</sub>
+              </p>
               <p>∴ Steel Yields!</p>
             </>
           )}
