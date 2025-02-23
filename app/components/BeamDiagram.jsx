@@ -32,7 +32,7 @@ const BeamDiagram = ({ dimensions }) => {
           strokeDasharray='5,5'
         />
         <text x='200' y='495' textAnchor='middle'>
-          b = {dimensions.b} mm
+          b = {dimensions.b || '(?)'} mm
         </text>
 
         <line
@@ -59,7 +59,7 @@ const BeamDiagram = ({ dimensions }) => {
           textAnchor='middle'
           transform='rotate(90, 420, 250)'
         >
-          d = {dimensions.d} mm
+          d = {dimensions.d || '(?)'} mm
         </text>
 
         <line
@@ -90,11 +90,11 @@ const BeamDiagram = ({ dimensions }) => {
         </text>
 
         <text x='200' y='40' textAnchor='middle'>
-          fc' = {dimensions.fc} MPa, fy = {dimensions.fy} MPa
+          fc' = {dimensions.fc || '(?)'} MPa, fy = {dimensions.fy || '(?)'} MPa
         </text>
 
         <text x='200' y='370' textAnchor='middle'>
-          Steel = {dimensions.steel} mm dia.
+          Steel = {dimensions.steel || '(?)'} mm dia.
         </text>
         <circle
           cx='200'

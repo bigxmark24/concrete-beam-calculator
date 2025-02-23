@@ -26,25 +26,22 @@ const SinglyBeamCalculator = () => {
     load: 0,
   })
   const [analysisResults, setAnalysisResults] = useState({})
+  const [isFormValid, setIsFormValid] = useState(false)
 
   const handleAnalysisChange = (e) => {
     const { name, value } = e.target
     if (name === 'steel') {
-      if (/^[0-9-]*$/.test(value)) {
-        setAnalysis((prev) => ({
-          ...prev,
-          [name]: value,
-        }))
-      }
+      setAnalysis((prev) => ({
+        ...prev,
+        [name]: value,
+      }))
       return
     }
 
-    if (/^[0-9]*$/.test(value)) {
-      setAnalysis((prev) => ({
-        ...prev,
-        [name]: parseFloat(value) || '',
-      }))
-    }
+    setAnalysis((prev) => ({
+      ...prev,
+      [name]: parseFloat(value) || '',
+    }))
   }
   const handleDesignChange = (e) => {
     const { name, value } = e.target
@@ -114,10 +111,12 @@ const SinglyBeamCalculator = () => {
                 <AnalysisForm
                   dimensions={analysis}
                   handleInputChange={handleAnalysisChange}
+                  onValidation={setIsFormValid}
                 />
                 <CalculateAnalysis
                   given={analysis}
                   setResults={setAnalysisResults}
+                  isFormValid={isFormValid}
                 />
                 {Object.keys(analysisResults).length > 0 && (
                   <AnalysisResults results={analysisResults} />

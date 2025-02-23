@@ -1,6 +1,6 @@
 import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants'
 
-const Results = ({ results }) => {
+const AnalysisResults = ({ results }) => {
   const {
     pmin1,
     pmin2,
@@ -170,4 +170,4 @@ const Results = ({ results }) => {
   )
 }
 
-export default Results
+export default AnalysisResults

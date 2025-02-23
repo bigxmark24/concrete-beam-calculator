@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants'
 
-const CalculateButton = ({ given, setResults }) => {
+const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
   const [loading, setLoading] = useState(false)
 
   const { b, d, steel, fc, fy } = given
@@ -94,7 +94,7 @@ const CalculateButton = ({ given, setResults }) => {
     <div className='mt-6'>
       <button
         onClick={handleCalculate}
-        disabled={loading}
+        disabled={loading || !isFormValid}
         className='w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-blue-400 flex items-center justify-center'
       >
         {loading ? (
@@ -110,4 +110,4 @@ const CalculateButton = ({ given, setResults }) => {
   )
 }
 
-export default CalculateButton
+export default CalculateAnalysis
