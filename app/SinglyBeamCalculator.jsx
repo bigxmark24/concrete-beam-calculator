@@ -63,9 +63,9 @@ const SinglyBeamCalculator = () => {
 
         <div className='flex justify-center mb-6'>
           <div className='border-b border-gray-200 w-full'>
-            <div className='flex justify-center space-x-8'>
+            <div className='flex justify-center sm:space-x-8'>
               <button
-                className={`px-6 py-2 font-medium transition-colors duration-200 ${
+                className={`px-4 sm:px-6 py-2 font-medium transition-colors duration-200 ${
                   activeTab === 'analysis'
                     ? 'text-gray-900 border-b-2 border-gray-900'
                     : 'text-gray-500 hover:text-gray-700'
@@ -75,7 +75,7 @@ const SinglyBeamCalculator = () => {
                 Analysis
               </button>
               <button
-                className={`px-6 py-2 font-medium transition-colors duration-200 ${
+                className={`px-4 sm:px-6 py-2 font-medium transition-colors duration-200 ${
                   activeTab === 'design'
                     ? 'text-gray-900 border-b-2 border-gray-900'
                     : 'text-gray-500 hover:text-gray-700'
@@ -85,7 +85,7 @@ const SinglyBeamCalculator = () => {
                 Design
               </button>
               <button
-                className={`px-6 py-2 font-medium transition-colors duration-200 ${
+                className={`px-4 sm:px-6 py-2 font-medium transition-colors duration-200 ${
                   activeTab === 'about'
                     ? 'text-gray-900 border-b-2 border-gray-900'
                     : 'text-gray-500 hover:text-gray-700'
@@ -99,7 +99,7 @@ const SinglyBeamCalculator = () => {
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          <div className='sticky top-0 md:static bg-white'>
+          <div className='sticky top-0 md:static bg-white z-20'>
             <BeamDiagram
               dimensions={activeTab === 'analysis' ? analysis : design}
             />
