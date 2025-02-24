@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants'
 
 const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
@@ -90,8 +90,17 @@ const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && loading === false) {
+      const resultsElement = document.getElementById('#')
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }, [loading])
+
   return (
-    <div className='mt-6'>
+    <div className='mt-6' id='#'>
       <button
         onClick={handleCalculate}
         disabled={loading || !isFormValid}
