@@ -9,8 +9,8 @@ const About = () => {
           This Singly Reinforced Concrete Beam Calculator was developed by a
           team of civil engineers to provide a reliable tool for structural
           analysis. The calculator follows the latest design codes and standards
-          for reinforced concrete design, making it suitable for both
-          educational purposes.
+          for reinforced concrete design, making it suitable for educational
+          purposes.
         </p>
 
         <div className='space-y-4'>
