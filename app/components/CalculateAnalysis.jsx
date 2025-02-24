@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants'
 
 const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(null)
 
   const { b, d, steel, fc, fy } = given
   const As =
