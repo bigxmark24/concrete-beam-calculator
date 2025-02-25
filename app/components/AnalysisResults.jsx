@@ -192,7 +192,7 @@ const AnalysisResults = ({ results }) => {
                 f<sub className='text-sm'>s</sub> {'<'} f
                 <sub className='text-sm'>y</sub>
               </p>
-              <p>∴ Steel Did Not Yields :'{'<'}</p>
+              <p>∴ Steel Did Not Yield :'{'<'}</p>
               <p>Recalculate with new c and a</p>
               <p>
                 As
