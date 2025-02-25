@@ -35,7 +35,7 @@ const AnalysisResults = ({ results }) => {
       <h3 className='text-lg font-bold mb-3'>Results:</h3>
       <div className='space-y-3'>
         <div>
-          <p className='font-semibold'>Step #1: Steep Ratios</p>
+          <p className='font-semibold'>Step #1: Steel Ratios</p>
           {b1Status === B1_STATUS.NORMAL_STRENGTH ? (
             <p>
               Since f<sub className='text-sm'>c</sub>' = {fc} is ≤ 28 MPa and ≥
@@ -160,14 +160,14 @@ const AnalysisResults = ({ results }) => {
             </>
           )}
           <p>
-            0.85fc' * a * b = As
+            0.85 * f<sub className='text-sm'>c</sub>' * a * b = As
             {pgovern !== P.P_ACT &&
               (pgovern === P.P_MAX ? (
                 <sub className='text-sm'>max</sub>
               ) : (
                 <sub className='text-sm'>min</sub>
               ))}{' '}
-            * fy
+            * f<sub className='text-sm'>y</sub>
           </p>
           <p>a = {a.toFixed(4)} mm</p>
           <p>c = {c.toFixed(4)} mm</p>

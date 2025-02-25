@@ -90,7 +90,8 @@ const BeamDiagram = ({ dimensions }) => {
         </text>
 
         <text x='200' y='40' textAnchor='middle'>
-          fc' = {dimensions.fc || '(?)'} MPa, fy = {dimensions.fy || '(?)'} MPa
+          fc' = {dimensions.fc || '(?)'} MPa, fy = {dimensions.fy || '(?)'} MPa,
+          Mu = {dimensions.fy || '(?)'} kN-m
         </text>
 
         <text x='200' y='370' textAnchor='middle'>
