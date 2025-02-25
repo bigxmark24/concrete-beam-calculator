@@ -8,6 +8,8 @@ import {
   DesignForm,
   AnalysisResults,
   About,
+  DesignCalculation,
+  DesignResults,
 } from './components';
 import Image from 'next/image';
 
@@ -21,12 +23,17 @@ const SinglyBeamCalculator = () => {
     fy: 400,
   });
   const [design, setDesign] = useState({
-    b: 500,
+    b: 300,
     d: 500,
-    load: 0,
+    load: 20,
+    barDia: 10,
+    fc: 27,
+    fy: 400,
   });
+  const [analysisValid, setAnalysisValid] = useState(false);
+  const [designValid, setDesignValid] = useState(false);
   const [analysisResults, setAnalysisResults] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [designResults, setDesignResults] = useState({});
 
   const handleAnalysisChange = (e) => {
     const { name, value } = e.target;
@@ -47,10 +54,20 @@ const SinglyBeamCalculator = () => {
   };
   const handleDesignChange = (e) => {
     const { name, value } = e.target;
-    setDesign((prev) => ({
-      ...prev,
-      [name]: parseFloat(value) || 0,
-    }));
+    if (name === 'barDia') {
+      setDesign((prev) => ({
+        ...prev,
+        [name]: parseFloat(value) || 0,
+      }));
+      return;
+    }
+
+    if (value === '' || /^[0-9]*\.?[0-9]*$/.test(value)) {
+      setDesign((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   return (
@@ -113,22 +130,35 @@ const SinglyBeamCalculator = () => {
                 <AnalysisForm
                   dimensions={analysis}
                   handleInputChange={handleAnalysisChange}
-                  onValidation={setIsFormValid}
+                  onValidation={setAnalysisValid}
                 />
                 <AnalysisCalculation
                   given={analysis}
                   setResults={setAnalysisResults}
-                  isFormValid={isFormValid}
+                  isFormValid={analysisValid}
+                  setDimensions={setAnalysis}
                 />
                 {Object.keys(analysisResults).length > 0 && (
                   <AnalysisResults results={analysisResults} />
                 )}
               </>
             ) : activeTab === 'design' ? (
-              <DesignForm
-                dimensions={design}
-                handleInputChange={handleDesignChange}
-              />
+              <>
+                <DesignForm
+                  dimensions={design}
+                  handleInputChange={handleDesignChange}
+                  onValidation={setDesignValid}
+                />
+                <DesignCalculation
+                  given={design}
+                  setResult={setDesignResults}
+                  isFormValid={designValid}
+                  setDimensions={setDesign}
+                />
+                {Object.keys(designResults).length > 0 && (
+                  <DesignResults results={designResults} />
+                )}
+              </>
             ) : (
               <About />
             )}

@@ -2,19 +2,17 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { B1_STATUS, P, STEEL_STATUS, STRAIN_STATUS } from '../constants';
 
-const AnalysisCalculation = ({
+const DesignCalculation = ({
   given,
-  setResults,
+  setResult,
   isFormValid,
   setDimensions,
 }) => {
   const [loading, setLoading] = useState(null);
 
-  const { b, d, steel, fc, fy } = given;
-  const As =
-    (Math.PI / 4) *
-    Math.pow(steel.split('-')[1], 2) *
-    parseInt(steel.split('-')[0]);
+  const { b, d, load, fc, fy, barDia } = given;
+  const Rn = (load * 1e6) / (0.9 * b * Math.pow(d, 2));
+
   const b1Status =
     fc <= 28 && fc >= 17
       ? B1_STATUS.NORMAL_STRENGTH
@@ -35,80 +33,41 @@ const AnalysisCalculation = ({
     const pmin2 = 1.4 / fy;
     const pmin = Math.max(pmin1, pmin2);
 
-    const pact = As / (b * d);
-
     const pmax = (3 / 7) * ((0.85 * fc * b1) / fy);
+
+    const pact =
+      ((0.85 * fc) / fy) * (1 - Math.sqrt(1 - (2 * Rn) / (0.85 * fc)));
 
     const p = pmin >= pact ? pmin : pact <= pmax && pmin < pact ? pact : pmax;
     const pgovern = p === pmin ? P.P_MIN : p === pmax ? P.P_MAX : P.P_ACT;
 
-    const AsUsed = pgovern === P.P_ACT ? As : p * b * d;
-    const a = (AsUsed * fy) / (0.85 * fc * b);
+    const As = p * b * d;
+    const a = (As * fy) / (0.85 * fc * b);
     const c = a / b1;
 
     const fs = (600 * (d - c)) / c;
     const steelStatus = fs < fy ? STEEL_STATUS.SDNY : STEEL_STATUS.SY;
     if (steelStatus === STEEL_STATUS.SDNY) {
-      const newC =
-        (Math.sqrt(600 * AsUsed * (600 * AsUsed + 3.4 * fc * b1 * b * d)) -
-          600 * AsUsed) /
-        (1.7 * fc * b1 * b);
-      const newA = c * b1;
-      const fsNew = (600 * (d - newC)) / newC;
-
-      const esmax = 0.005;
-      const esmin = fsNew / 200_000;
-      const es = (0.003 * (d - newC)) / newC;
-      const strainStatus =
-        es >= esmax
-          ? STRAIN_STATUS.TENSION_CONTROLLED
-          : es < esmax && es >= esmin
-          ? STRAIN_STATUS.TRANSITION_ZONE
-          : STRAIN_STATUS.COMPRESSION_CONTROLLED;
-      const phimax = 0.9;
-      const phimin = 0.65;
-      const phi =
-        strainStatus === STRAIN_STATUS.TENSION_CONTROLLED
-          ? phimax
-          : strainStatus === STRAIN_STATUS.TRANSITION_ZONE
-          ? phimin + (es - 0.002) * (250 / 3)
-          : phimin;
-
-      const nominalMoment = (AsUsed * fsNew * (d - newA / 2)) / 1e6;
-      const ultimateMoment = (phi * nominalMoment).toFixed(4);
-
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      setResults({
+      setResult({
+        Rn,
         fc,
-        b1Status,
         b1,
+        b1Status,
         pmin1,
         pmin2,
         pmin,
-        pact,
         pmax,
+        pact,
         p,
         pgovern,
-        AsUsed,
+        As,
         a,
         c,
         fs,
         steelStatus,
-        newC,
-        newA,
-        fsNew,
-        esmax,
-        esmin,
-        es,
-        strainStatus,
-        phi,
-        phimax,
-        phimin,
-        nominalMoment,
-        ultimateMoment,
       });
-      setDimensions((prev) => ({ ...prev, load: ultimateMoment }));
       setLoading(false);
       return;
     }
@@ -131,23 +90,24 @@ const AnalysisCalculation = ({
         ? phimin + (es - 0.002) * (250 / 3)
         : phimin;
 
-    const nominalMoment = (AsUsed * fy * (d - a / 2)) / 1e6;
-    const ultimateMoment = (phi * nominalMoment).toFixed(4);
+    const barsCount = As / ((Math.PI * Math.pow(barDia, 2)) / 4);
+    const finalCount = Math.ceil(barsCount);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setResults({
+    setResult({
+      Rn,
       fc,
-      b1Status,
       b1,
+      b1Status,
       pmin1,
       pmin2,
       pmin,
-      pact,
       pmax,
+      pact,
       p,
       pgovern,
-      AsUsed,
+      As,
       a,
       c,
       fs,
@@ -156,13 +116,14 @@ const AnalysisCalculation = ({
       esmin,
       es,
       strainStatus,
-      phi,
       phimax,
       phimin,
-      nominalMoment,
-      ultimateMoment,
+      phi,
+      barDia,
+      barsCount,
+      finalCount,
     });
-    setDimensions((prev) => ({ ...prev, load: ultimateMoment }));
+    setDimensions((prev) => ({ ...prev, steel: `${finalCount}-${barDia}` }));
     setLoading(false);
   };
 
@@ -195,4 +156,4 @@ const AnalysisCalculation = ({
   );
 };
 
-export default AnalysisCalculation;
+export default DesignCalculation;
