@@ -18,5 +18,5 @@ export const STRAIN_STATUS = {
 export const B1_STATUS = {
   NORMAL_STRENGTH: "normal strength",
   HIGH_STRENGTH: "high strength",
-  LOW_STRENGTH: "low strength",
+  HIGHEST_STRENGTH: "highest strength",
 };

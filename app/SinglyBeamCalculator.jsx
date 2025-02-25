@@ -4,7 +4,7 @@ import { useState } from 'react';
 import {
   AnalysisForm,
   BeamDiagram,
-  CalculateAnalysis,
+  AnalysisCalculation,
   DesignForm,
   AnalysisResults,
   About,
@@ -113,7 +113,7 @@ const SinglyBeamCalculator = () => {
                   handleInputChange={handleAnalysisChange}
                   onValidation={setIsFormValid}
                 />
-                <CalculateAnalysis
+                <AnalysisCalculation
                   given={analysis}
                   setResults={setAnalysisResults}
                   isFormValid={isFormValid}

@@ -2,7 +2,7 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { B1_STATUS, P, STEEL_STATUS, STRAIN_STATUS } from '../constants';
 
-const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
+const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
   const [loading, setLoading] = useState(null);
 
   const { b, d, steel, fc, fy } = given;
@@ -37,7 +37,8 @@ const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
     const p = pmin >= pact ? pmin : pact <= pmax && pmin < pact ? pact : pmax;
     const pgovern = p === pmin ? P.P_MIN : p === pmax ? P.P_MAX : P.P_ACT;
 
-    const a = (As * fy) / (0.85 * fc * b);
+    const AsUsed = pgovern === P.P_ACT ? As : p * b * d;
+    const a = (AsUsed * fy) / (0.85 * fc * b);
     const c = a / b1;
 
     const fs = (600 * (d - c)) / c;
@@ -66,7 +67,7 @@ const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
         ? phimin + (es - 0.002) * (250 / 3)
         : phimin;
 
-    const nominalMoment = As * fy * (d - a / 2);
+    const nominalMoment = AsUsed * fy * (d - a / 2);
     const ultimateMoment = phi * nominalMoment;
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -81,6 +82,7 @@ const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
       pmax,
       p,
       pgovern,
+      AsUsed,
       a,
       c,
       fs,
@@ -127,4 +129,4 @@ const CalculateAnalysis = ({ given, setResults, isFormValid }) => {
   );
 };
 
-export default CalculateAnalysis;
+export default AnalysisCalculation;
