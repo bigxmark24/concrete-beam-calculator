@@ -136,6 +136,7 @@ const SinglyBeamCalculator = () => {
                   given={analysis}
                   setResults={setAnalysisResults}
                   isFormValid={analysisValid}
+                  setDimensions={setAnalysis}
                 />
                 {Object.keys(analysisResults).length > 0 && (
                   <AnalysisResults results={analysisResults} />
@@ -152,6 +153,7 @@ const SinglyBeamCalculator = () => {
                   given={design}
                   setResult={setDesignResults}
                   isFormValid={designValid}
+                  setDimensions={setDesign}
                 />
                 {Object.keys(designResults).length > 0 && (
                   <DesignResults results={designResults} />

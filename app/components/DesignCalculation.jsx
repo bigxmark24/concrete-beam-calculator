@@ -2,7 +2,12 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { B1_STATUS, P, STEEL_STATUS, STRAIN_STATUS } from '../constants';
 
-const DesignCalculation = ({ given, setResult, isFormValid }) => {
+const DesignCalculation = ({
+  given,
+  setResult,
+  isFormValid,
+  setDimensions,
+}) => {
   const [loading, setLoading] = useState(null);
 
   const { b, d, load, fc, fy, barDia } = given;
@@ -118,6 +123,7 @@ const DesignCalculation = ({ given, setResult, isFormValid }) => {
       barsCount,
       finalCount,
     });
+    setDimensions((prev) => ({ ...prev, steel: `${finalCount}-${barDia}` }));
     setLoading(false);
   };
 

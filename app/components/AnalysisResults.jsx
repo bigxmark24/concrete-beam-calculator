@@ -262,16 +262,14 @@ const AnalysisResults = ({ results }) => {
             * fy * (d - a/2)
           </p>
           <p>
-            M<sub className='text-sm'>n</sub> ={' '}
-            {(nominalMoment / 1e6).toFixed(4)} kN-m
+            M<sub className='text-sm'>n</sub> = {nominalMoment.toFixed(4)} kN-m
           </p>
           <p>
             M<sub className='text-sm'>u</sub> = Φ * M
             <sub className='text-sm'>n</sub>
           </p>
           <p>
-            M<sub className='text-sm'>u</sub> ={' '}
-            {(ultimateMoment / 1e6).toFixed(4)} kN-m
+            M<sub className='text-sm'>u</sub> = {ultimateMoment} kN-m
           </p>
         </div>
       </div>

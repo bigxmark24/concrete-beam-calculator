@@ -2,7 +2,12 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { B1_STATUS, P, STEEL_STATUS, STRAIN_STATUS } from '../constants';
 
-const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
+const AnalysisCalculation = ({
+  given,
+  setResults,
+  isFormValid,
+  setDimensions,
+}) => {
   const [loading, setLoading] = useState(null);
 
   const { b, d, steel, fc, fy } = given;
@@ -69,8 +74,8 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
           ? phimin + (es - 0.002) * (250 / 3)
           : phimin;
 
-      const nominalMoment = AsUsed * fsNew * (d - newA / 2);
-      const ultimateMoment = phi * nominalMoment;
+      const nominalMoment = (AsUsed * fsNew * (d - newA / 2)) / 1e6;
+      const ultimateMoment = (phi * nominalMoment).toFixed(4);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -103,6 +108,7 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
         nominalMoment,
         ultimateMoment,
       });
+      setDimensions((prev) => ({ ...prev, load: ultimateMoment }));
       setLoading(false);
       return;
     }
@@ -125,8 +131,8 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
         ? phimin + (es - 0.002) * (250 / 3)
         : phimin;
 
-    const nominalMoment = AsUsed * fy * (d - a / 2);
-    const ultimateMoment = phi * nominalMoment;
+    const nominalMoment = (AsUsed * fy * (d - a / 2)) / 1e6;
+    const ultimateMoment = (phi * nominalMoment).toFixed(4);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -156,6 +162,7 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
       nominalMoment,
       ultimateMoment,
     });
+    setDimensions((prev) => ({ ...prev, load: ultimateMoment }));
     setLoading(false);
   };
 
