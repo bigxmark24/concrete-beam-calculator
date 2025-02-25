@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 const AnalysisForm = ({ dimensions, handleInputChange, onValidation }) => {
   const [errors, setErrors] = useState({
@@ -7,53 +7,54 @@ const AnalysisForm = ({ dimensions, handleInputChange, onValidation }) => {
     steel: '',
     fc: '',
     fy: '',
-  })
+  });
 
   const validateInput = (name, value) => {
     switch (name) {
       case 'b':
-        if (value < 150 || !value) return 'Minimum width (b) is 150mm'
-        if (value > 1000) return 'Maximum width (b) is 1000mm'
-        return ''
+        if (value < 150 || !value) return 'Minimum width (b) is 150mm';
+        if (value > 1000) return 'Maximum width (b) is 1000mm';
+        return '';
       case 'd':
-        if (value < 125 || !value) return 'Minimum effective depth (d) is 125mm'
-        if (value > 1500) return 'Maximum effective depth (d) is 1500mm'
-        return ''
+        if (value < 125 || !value)
+          return 'Minimum effective depth (d) is 125mm';
+        if (value > 1500) return 'Maximum effective depth (d) is 1500mm';
+        return '';
       case 'steel':
-        if (!/^\d+-\d+$/.test(value)) return 'Invalid format (e.g. 4-28)'
-        const [qty, dia] = value.split('-')
-        if (parseInt(qty) < 1 || !qty) return 'Minimum 1 steel bar'
-        if (parseInt(dia) < 10 || !dia) return 'Minimum diameter is 10mm'
-        if (parseInt(dia) > 40) return 'Maximum diameter is 40mm'
-        return ''
+        if (!/^\d+-\d+$/.test(value)) return 'Invalid format (e.g. 4-28)';
+        const [qty, dia] = value.split('-');
+        if (parseInt(qty) < 1 || !qty) return 'Minimum 1 steel bar';
+        if (parseInt(dia) < 10 || !dia) return 'Minimum diameter is 10mm';
+        if (parseInt(dia) > 40) return 'Maximum diameter is 40mm';
+        return '';
       case 'fc':
-        if (value < 17 || !value) return "Minimum f\u2083' is 17 MPa"
-        if (value > 70) return "Maximum f\u2083' is 70 MPa"
-        return ''
+        if (value < 17 || !value) return "Minimum f\u2083' is 17 MPa";
+        if (value > 70) return "Maximum f\u2083' is 70 MPa";
+        return '';
       case 'fy':
-        if (value < 275 || !value) return 'Minimum f\u1D64 is 275 MPa'
-        if (value > 550) return 'Maximum f\u1D64 is 550 MPa'
-        return ''
+        if (value < 275 || !value) return 'Minimum f\u1D64 is 275 MPa';
+        if (value > 550) return 'Maximum f\u1D64 is 550 MPa';
+        return '';
       default:
-        return ''
+        return '';
     }
-  }
+  };
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    handleInputChange(e)
+    const { name, value } = e.target;
+    handleInputChange(e);
 
     const error = validateInput(
       name,
       name === 'steel' ? value : parseFloat(value)
-    )
-    setErrors((prev) => ({ ...prev, [name]: error }))
-  }
+    );
+    setErrors((prev) => ({ ...prev, [name]: error }));
+  };
 
   useEffect(() => {
-    const isValid = Object.values(errors).every((error) => error === '')
-    onValidation?.(isValid)
-  }, [errors])
+    const isValid = Object.values(errors).every((error) => error === '');
+    onValidation?.(isValid);
+  }, [errors]);
 
   useEffect(() => {
     setErrors({
@@ -62,8 +63,8 @@ const AnalysisForm = ({ dimensions, handleInputChange, onValidation }) => {
       steel: validateInput('steel', dimensions.steel),
       fc: validateInput('fc', dimensions.fc),
       fy: validateInput('fy', dimensions.fy),
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <div className='space-y-4'>
@@ -175,7 +176,7 @@ const AnalysisForm = ({ dimensions, handleInputChange, onValidation }) => {
         {errors.fy && <p className='text-red-500 text-sm mt-1'>{errors.fy}</p>}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AnalysisForm
+export default AnalysisForm;

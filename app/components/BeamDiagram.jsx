@@ -106,7 +106,7 @@ const BeamDiagram = ({ dimensions }) => {
         />
       </svg>
     </div>
-  )
-}
+  );
+};
 
-export default BeamDiagram
+export default BeamDiagram;

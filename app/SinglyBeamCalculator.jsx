@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   AnalysisForm,
   BeamDiagram,
@@ -8,48 +8,48 @@ import {
   DesignForm,
   AnalysisResults,
   About,
-} from './components'
-import Image from 'next/image'
+} from './components';
+import Image from 'next/image';
 
 const SinglyBeamCalculator = () => {
-  const [activeTab, setActiveTab] = useState('analysis')
+  const [activeTab, setActiveTab] = useState('analysis');
   const [analysis, setAnalysis] = useState({
     b: 300,
     d: 500,
     steel: '4-28',
     fc: 27,
     fy: 400,
-  })
+  });
   const [design, setDesign] = useState({
     b: 500,
     d: 500,
     load: 0,
-  })
-  const [analysisResults, setAnalysisResults] = useState({})
-  const [isFormValid, setIsFormValid] = useState(false)
+  });
+  const [analysisResults, setAnalysisResults] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleAnalysisChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     if (name === 'steel') {
       setAnalysis((prev) => ({
         ...prev,
         [name]: value,
-      }))
-      return
+      }));
+      return;
     }
 
     setAnalysis((prev) => ({
       ...prev,
       [name]: parseFloat(value) || '',
-    }))
-  }
+    }));
+  };
   const handleDesignChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setDesign((prev) => ({
       ...prev,
       [name]: parseFloat(value) || 0,
-    }))
-  }
+    }));
+  };
 
   return (
     <div className='max-w-4xl mx-auto p-4'>
@@ -134,7 +134,7 @@ const SinglyBeamCalculator = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SinglyBeamCalculator
+export default SinglyBeamCalculator;

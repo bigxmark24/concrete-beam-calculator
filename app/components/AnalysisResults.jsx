@@ -1,4 +1,4 @@
-import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants'
+import { P, STEEL_STATUS, STRAIN_STATUS } from '../constants';
 
 const AnalysisResults = ({ results }) => {
   const {
@@ -22,7 +22,7 @@ const AnalysisResults = ({ results }) => {
     phimin,
     nominalMoment,
     ultimateMoment,
-  } = results
+  } = results;
 
   return (
     <div className='mt-6 p-4 bg-gray-50 rounded-md'>
@@ -167,7 +167,7 @@ const AnalysisResults = ({ results }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AnalysisResults
+export default AnalysisResults;
