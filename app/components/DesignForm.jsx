@@ -55,7 +55,7 @@ const DesignForm = ({ dimensions, handleInputChange }) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DesignForm
+export default DesignForm;
