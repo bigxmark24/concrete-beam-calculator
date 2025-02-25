@@ -44,7 +44,65 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
     const fs = (600 * (d - c)) / c;
     const steelStatus = fs < fy ? STEEL_STATUS.SDNY : STEEL_STATUS.SY;
     if (steelStatus === STEEL_STATUS.SDNY) {
-      window.alert(STEEL_STATUS.SDNY);
+      const newC =
+        (Math.sqrt(600 * AsUsed * (600 * AsUsed + 3.4 * fc * b1 * b * d)) -
+          600 * AsUsed) /
+        (1.7 * fc * b1 * b);
+      const newA = c * b1;
+      const fsNew = (600 * (d - newC)) / newC;
+
+      const esmax = 0.005;
+      const esmin = fsNew / 200_000;
+      const es = (0.003 * (d - newC)) / newC;
+      const strainStatus =
+        es >= esmax
+          ? STRAIN_STATUS.TENSION_CONTROLLED
+          : es < esmax && es >= esmin
+          ? STRAIN_STATUS.TRANSITION_ZONE
+          : STRAIN_STATUS.COMPRESSION_CONTROLLED;
+      const phimax = 0.9;
+      const phimin = 0.65;
+      const phi =
+        strainStatus === STRAIN_STATUS.TENSION_CONTROLLED
+          ? phimax
+          : strainStatus === STRAIN_STATUS.TRANSITION_ZONE
+          ? phimin + (es - 0.002) * (250 / 3)
+          : phimin;
+
+      const nominalMoment = AsUsed * fsNew * (d - newA / 2);
+      const ultimateMoment = phi * nominalMoment;
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setResults({
+        fc,
+        b1Status,
+        b1,
+        pmin1,
+        pmin2,
+        pmin,
+        pact,
+        pmax,
+        p,
+        pgovern,
+        AsUsed,
+        a,
+        c,
+        fs,
+        steelStatus,
+        newC,
+        newA,
+        fsNew,
+        esmax,
+        esmin,
+        es,
+        strainStatus,
+        phi,
+        phimax,
+        phimin,
+        nominalMoment,
+        ultimateMoment,
+      });
       setLoading(false);
       return;
     }
@@ -73,6 +131,7 @@ const AnalysisCalculation = ({ given, setResults, isFormValid }) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     setResults({
+      fc,
       b1Status,
       b1,
       pmin1,
