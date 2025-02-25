@@ -38,10 +38,12 @@ const SinglyBeamCalculator = () => {
       return;
     }
 
-    setAnalysis((prev) => ({
-      ...prev,
-      [name]: parseFloat(value) || '',
-    }));
+    if (value === '' || /^[0-9]*\.?[0-9]*$/.test(value)) {
+      setAnalysis((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
   const handleDesignChange = (e) => {
     const { name, value } = e.target;

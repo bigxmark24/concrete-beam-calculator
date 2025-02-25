@@ -38,20 +38,23 @@ const AnalysisResults = ({ results }) => {
           <p className='font-semibold'>Step #1: Steep Ratios</p>
           {b1Status === B1_STATUS.NORMAL_STRENGTH ? (
             <p>
-              Since f<sub className='text-sm'>c</sub>' ≤ 28 MPa and ≥ 17 MPa
+              Since f<sub className='text-sm'>c</sub>' = {fc} is ≤ 28 MPa and ≥
+              17 MPa
             </p>
           ) : b1Status === B1_STATUS.HIGH_STRENGTH ? (
             <p>
-              Since f<sub className='text-sm'>c</sub>' {'>'} 28 MPa and {'<'} 55
-              MPa, use the formula: 0.85 - ((0.05 * (f
+              Since f<sub className='text-sm'>c</sub>' = {fc} is {'>'} 28 MPa
+              and {'<'} 55 MPa, use the formula: 0.85 - ((0.05 * (f
               <sub className='text-sm'>c</sub>' - 28)) / 7)
             </p>
           ) : (
             <p>
-              Since f<sub className='text-sm'>c</sub>' {'>'} 55 MPa
+              Since f<sub className='text-sm'>c</sub>' = {fc} is {'>'} 55 MPa
             </p>
           )}
-          <p>∴ b1 = {b1.toFixed(4)} mm</p>
+          <p>
+            ∴ β<sub className='text-sm'>1</sub> = {b1.toFixed(4)}
+          </p>
           <p>
             ρ<sub className='text-sm'>min1</sub>= {pmin1.toFixed(4)}
           </p>
